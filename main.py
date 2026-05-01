@@ -47,11 +47,13 @@ async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(f"✅ သိမ်းဆည်းပြီးပါပြီ ID: {txid}")
 
 if __name__ == '__main__':
-    if not TOKEN:
-        print("Error: BOT_TOKEN not found in environment variables!")
-    else:
-        app = ApplicationBuilder().token(TOKEN).build()
-        app.add_handler(MessageHandler(filters.PHOTO, handle_photo))
-        print("Bot is running...")
-        app.run_polling()
-        
+    try:
+        if not TOKEN:
+            print("Error: BOT_TOKEN is missing!")
+        else:
+            app = ApplicationBuilder().token(TOKEN).build()
+            app.add_handler(MessageHandler(filters.PHOTO, handle_photo))
+            print("Bot starts polling...")
+            app.run_polling()
+    except Exception as e:
+        print(f"CRITICAL ERROR: {e}")
