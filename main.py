@@ -32,7 +32,7 @@ async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     file = await photo.get_file()
     
     path = "receipt.jpg"
-    await file.download_to_drive(path)
+    await file.download_to_path(path)
     
     text = pytesseract.image_to_string(Image.open(path))
     txid = extract_txid(text)
